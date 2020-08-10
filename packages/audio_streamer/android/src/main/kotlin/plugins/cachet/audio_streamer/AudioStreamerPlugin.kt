@@ -23,8 +23,8 @@ public class AudioStreamerPlugin : FlutterPlugin, RequestPermissionsResultListen
 
     /// Constants
     private val eventChannelName = "audio_streamer.eventChannel"
-    private val sampleRate = 44100
-    private var bufferSize = 6400 * 2; /// Magical number!
+    private val sampleRate = 24000
+    private var bufferSize = 4096; /// Magical number!
     private val maxAmplitude = 32767 // same as 2^15
     private val logTag = "AudioStreamerPlugin"
 
@@ -119,7 +119,7 @@ public class AudioStreamerPlugin : FlutterPlugin, RequestPermissionsResultListen
                     /// Convert to list in order to send via EventChannel.
                     val audioBufferList = ArrayList<Double>()
                     for (impulse in audioBuffer) {
-                        val normalizedImpulse = impulse.toDouble() / maxAmplitude.toDouble()
+                        val normalizedImpulse = impulse.toDouble()
                         audioBufferList.add(normalizedImpulse)
                     }
                     eventSink!!.success(audioBufferList)
